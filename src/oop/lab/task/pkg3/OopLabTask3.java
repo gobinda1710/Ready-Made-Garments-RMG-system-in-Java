@@ -101,7 +101,6 @@ class Customer {
 }
 
 
-
 class Inventory {
 
     List<Garment> garments;
@@ -122,7 +121,6 @@ class Inventory {
         return null;
     }
 }
-
 public class OopLabTask3 {
 
     public static void main(String[] args) {
