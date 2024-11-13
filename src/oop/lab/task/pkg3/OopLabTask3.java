@@ -102,10 +102,6 @@ class Customer {
 
 
 
-
-
-
-
 class Inventory {
 
     List<Garment> garments;
