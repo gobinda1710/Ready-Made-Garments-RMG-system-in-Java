@@ -100,6 +100,7 @@ class Customer {
 //    }
 }
 
+<<<<<<< HEAD
 
 class Inventory {
 
@@ -121,6 +122,8 @@ class Inventory {
         return null;
     }
 }
+=======
+>>>>>>> 0a5c8b391c341875aeedf2bbc2a07028ab005e87
 public class OopLabTask3 {
 
     public static void main(String[] args) {
