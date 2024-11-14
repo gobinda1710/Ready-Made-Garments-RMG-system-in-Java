@@ -112,7 +112,7 @@ class Order {
 
         System.out.println("Discount Applied: " + discountPercentage + "%");
         System.out.println("Total Amount: " + calculateFinalAmount(discountPercentage));
-        System.out.println("=====================");
+        System.out.println("=======================");
     }
 }
 
@@ -171,6 +171,6 @@ public class OopLabTask3 {
         newOrder.addGarmentToOrder(garment2);
 
         Customer customer = new Customer("CUST01", "Gobinda", "das23105101193.diu.edu.bd", "0175116908");
-        customer.placeOrderWithDiscount(newOrder, 12.5);
+        customer.placeOrderWithDiscount(newOrder, 15);
     }
 }
