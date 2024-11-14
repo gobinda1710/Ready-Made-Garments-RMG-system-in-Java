@@ -122,18 +122,18 @@ class Inventory {
         return null;
     }
 }
-=======
->>>>>>> 0a5c8b391c341875aeedf2bbc2a07028ab005e87
 public class OopLabTask3 {
 
     public static void main(String[] args) {
-        Garment g1 = new Garment();
-        g1.name = "Silk";
-        g1.description = "Good Product";
-        g1.price= 600;
-        double x = g1.calculateDiscountPrice(10);
-        System.out.println(x);
 
+        Garment garment1 = new Garment("G1", "Silk Blouse", "Elegant Silk Blouse", "M", "Red", 750, 15);
+        Garment garment2 = new Garment("G2", "Denim Jeans", "Classic Blue Jeans", "L", "Blue", 550, 30);
+
+        Order newOrder = new Order("ORD101", new Date());
+        newOrder.addGarmentToOrder(garment1);
+        newOrder.addGarmentToOrder(garment2);
+
+        Customer customer = new Customer("CUST01", "Gobinda", "das23105101193.diu.edu.bd", "0175116908");
+        customer.placeOrderWithDiscount(newOrder, 12.5);
     }
-
 }
