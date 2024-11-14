@@ -1,5 +1,3 @@
-package oop.lab.task.pkg3;
-//importing list and array list
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,49 +5,71 @@ import java.util.Date;
 
 class Garment {
 
-    public String id;
-    public String name;
-    public String description;
-    public String size;
-    public String color;
-    public double price;
+    public String garmentId;
+    public String garmentName;
+    public String garmentDescription;
+    public String garmentSize;
+    public String garmentColor;
+    public double garmentPrice;
     public int stockQuantity;
 
-    void updateStock(int quantity) {
+    public Garment(String garmentId, String garmentName, String garmentDescription, String garmentSize, String garmentColor, double garmentPrice, int stockQuantity) {
+        this.garmentId = garmentId;
+        this.garmentName = garmentName;
+        this.garmentDescription = garmentDescription;
+        this.garmentSize = garmentSize;
+        this.garmentColor = garmentColor;
+        this.garmentPrice = garmentPrice;
+        this.stockQuantity = stockQuantity;
+    }
+
+    void updateStockQuantity(int quantity) {
         this.stockQuantity = quantity;
     }
 
-    double calculateDiscountPrice(double discountPercentage) {
-        double discount = price * (discountPercentage / 100);
-        return discount;
+    double getDiscountedPrice(double discountPercentage) {
+        return garmentPrice * (1 - discountPercentage / 100);
     }
 }
+
 class Fabric {
 
-    public String id;
-    public String type;
-    public String color;
-    public double pricePerMeter;
+    public String fabricId;
+    public String fabricType;
+    public String fabricColor;
+    public double pricePerUnit;
 
-    double calculateCost(double meters) {
-        double newPrice = pricePerMeter * meters;
-        return newPrice;
+    public Fabric(String fabricId, String fabricType, String fabricColor, double pricePerUnit) {
+        this.fabricId = fabricId;
+        this.fabricType = fabricType;
+        this.fabricColor = fabricColor;
+        this.pricePerUnit = pricePerUnit;
+    }
+
+    double calculateFabricCost(double quantity) {
+        return pricePerUnit * quantity;
     }
 }
+
 class Supplier {
 
-    public String id;
-    public String name;
-    public String contactInfo;
-    //List
-    List<Fabric> suppliedFabric = new ArrayList<>();
+    public String supplierId;
+    public String supplierName;
+    public String supplierContactInfo;
+    private List<Fabric> fabricsSupplied = new ArrayList<>();
 
-    void addFabric(Fabric fabric) {
-        suppliedFabric.add(fabric);
+    public Supplier(String supplierId, String supplierName, String supplierContactInfo) {
+        this.supplierId = supplierId;
+        this.supplierName = supplierName;
+        this.supplierContactInfo = supplierContactInfo;
     }
 
-    List<Fabric> getSuppliedFabrics() {
-        return suppliedFabric;
+    void addFabricToSupplier(Fabric fabric) {
+        fabricsSupplied.add(fabric);
+    }
+
+    List<Fabric> getSuppliedFabricList() {
+        return fabricsSupplied;
     }
 }
 
@@ -57,71 +77,88 @@ class Order {
 
     public String orderId;
     public Date orderDate;
-    public List<Garment> garments = new ArrayList<>();
-    private double totalAmount;
+    private List<Garment> orderedGarments = new ArrayList<>();
+    private double finalAmount;
 
-    void addGarment(Garment garment) {
-        garments.add(garment);
+    public Order(String orderId, Date orderDate) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
     }
 
-    double calculateTotalAmount() {
-        for (Garment g : garments) {
-            totalAmount = totalAmount + g.price;
-        }
-        return totalAmount;
+    void addGarmentToOrder(Garment garment) {
+        orderedGarments.add(garment);
     }
 
-    void printOrderDetails() {
-        System.out.println("--------------------------");
-        System.out.println("Order Details");
-        System.out.println("--------------------------");
-        for (Garment g : garments) {
-            System.out.println("Name: " + g.name);
-            System.out.println("Price: " + g.price);
-            System.out.println("Description: " + g.description);
-            System.out.println("--------------------------");
+    double calculateFinalAmount(double discountPercentage) {
+        finalAmount = 0;
+        for (Garment garment : orderedGarments) {
+            finalAmount += garment.getDiscountedPrice(discountPercentage);
         }
+        return finalAmount;
+    }
+
+    void printOrderSummary(Customer customer, double discountPercentage) {
+        System.out.println("== Order Summary ==");
+        System.out.println("Customer Name: " + customer.customerName);
+        System.out.println("Customer Email: " + customer.customerEmail);
+        System.out.println("Order ID: " + orderId);
+        System.out.println("Order Date: " + orderDate);
+
+        for (Garment garment : orderedGarments) {
+            System.out.println("Item: " + garment.garmentName + " | Original Price: " + garment.garmentPrice
+                    + " | Discounted Price: " + garment.getDiscountedPrice(discountPercentage)
+                    + " | Description: " + garment.garmentDescription);
+        }
+
+        System.out.println("Discount Applied: " + discountPercentage + "%");
+        System.out.println("Total Amount: " + calculateFinalAmount(discountPercentage));
+        System.out.println("=====================");
     }
 }
+
 class Customer {
 
     public String customerId;
-    public String name;
-    public String email;
-    public String phone;
+    public String customerName;
+    public String customerEmail;
+    public String customerPhone;
 
-    void placeOrder(Order order) {
-        order.printOrderDetails();
-        System.out.println("Order Placed");
+    public Customer(String customerId, String customerName, String customerEmail, String customerPhone) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
     }
 
-//    List<Order> viewOrders() {
-//        
-//    }
+    void placeOrderWithDiscount(Order order, double discountPercentage) {
+        System.out.println("Placing Order for Customer: " + customerName);
+        order.printOrderSummary(this, discountPercentage);
+        System.out.println("Order Completed!");
+    }
 }
-
-<<<<<<< HEAD
 
 class Inventory {
 
-    List<Garment> garments;
+    private List<Garment> garmentsList = new ArrayList<>();
 
-    void addGarment(Garment garment) {
-        garments.add(garment);
+    void addGarmentToInventory(Garment garment) {
+        garmentsList.add(garment);
     }
 
-    void removeGarment(String id) {
-        garments.remove(id);
+    void removeGarmentFromInventory(String garmentId) {
+        garmentsList.removeIf(g -> g.garmentId.equals(garmentId));
     }
 
-    Garment findGarment(String id) {
-        for (Garment g : garments) {
-            if(g.id == id)
-                return g;
+    Garment searchGarmentById(String garmentId) {
+        for (Garment garment : garmentsList) {
+            if (garment.garmentId.equals(garmentId)) {
+                return garment;
+            }
         }
         return null;
     }
 }
+
 public class OopLabTask3 {
 
     public static void main(String[] args) {
