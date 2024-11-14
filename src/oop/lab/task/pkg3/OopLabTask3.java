@@ -133,7 +133,7 @@ class Customer {
     void placeOrderWithDiscount(Order order, double discountPercentage) {
         System.out.println("Placing Order for Customer: " + customerName);
         order.printOrderSummary(this, discountPercentage);
-        System.out.println("Order Completed!");
+        System.out.println("Order Successful!");
     }
 }
 
